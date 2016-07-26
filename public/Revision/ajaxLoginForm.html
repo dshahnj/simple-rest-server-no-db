@@ -10,17 +10,18 @@
 		password:<input type="text" class="cred" name="password" value=""><br/>
 		
 		<span><input id="myBtn" type="submit" value="submit"></span>
-	</form>
 	
-	<p id="demo"></p>
+	<div id="myDiv"></div>
 
 	<script>
 		$(document).ready(function(){
 
 			$("#myBtn").on("click",function(e){
+
 				e.preventDefault();
-				console.log("Hello");
+
 				var collections = $(".cred");
+
 				console.log(collections[0].value);
 
 				var credentials = {
@@ -28,16 +29,42 @@
 					password: collections[1].value
 				}
 				$.ajax({
-					url : '/users/50',
-					type: 'GET',
+					url : '/users',
+					type: 'POST',
 					data: credentials,
 					success: function(response){
-						console.log(response.uname);
-						console.log(response.password);
+						
+						console.log(response); // will console the posted data only. To get all the data use $.get() 							method
 					}
+				});
+
+				$.get('/users',function(data,status){
+					var jsonObj = data;
+					var html = '<table border= "1" >';
+					html += '<tr><th>username</th><th>Password</th></tr>';
+					console.log("jsonObj: "+jsonObj);
+					for(var i = 0; i < jsonObj.length; i++){
+
+						html += '<tr><td>' + jsonObj[i].uname + '</td><td>' + jsonObj[i].password + '</td></tr>';
+					}
+						html += '</table>';
+						$("#myDiv").html(html);
 				})
+				/*$.get('/users',function(data,status){
+					var jsonObj = data;
+					console.log("jsonObj: "+jsonObj);
+					var html = "<table border= '1' >";
+					html += "<tr><th>Username</th><th>Password</th></tr>";
+					for(var i = 0; i < jsonObj.length; i++){
+						html += "<tr><td>" + jsoanObj[i].uname + "</td><td>" + jsonObj[i].password + "</td></tr>";
+					}
+					html += "</table>";
+					$("#demo").html(html);
+				})*/
 			})
 		})
 	</script>
+	</form>
+	
 </body>
 </html>
