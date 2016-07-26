@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="myDiv">
+		<ul class="myUL">
+			<li class="li">1</li>
+			<li class="li">2</li>
+			<li class="li">3</li>
+		</ul>
+		<button id="myBtn">click</button>
+	</div>
+	<p id="p1"></p>
+	<script type="text/javascript">
+	document.getElementById("myBtn").onclick = function(){
+		var x = document.getElementsByClassName("li");
+		console.log("x: "+x);
+		for(var i = 0; i < x.length; i++){
+			console.log(x[i].innerHTML);
+		}
+	}
+	</script>
+</body>
+</html>

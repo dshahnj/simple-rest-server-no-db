@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<form id="form1">
+		FirstName:<input type="text" class="fname" name="fname" value=""><br/>
+		LastName:<input type="text" class="lname" name="lname" value=""><br/>
+		
+	</form>
+	<input id="myBtn" type="submit" value="Submit">
+
+	<p id="demo"></p>
+
+	<script type="text/javascript">
+		document.getElementById("myBtn").addEventListener("click", function(event) {
+
+			//event.preventDefault(); // prevents default action of the submit button
+
+			var x = document.getElementById("form1"); // x has collections
+
+			var text = "";
+
+			for(var i = 0; i < x.length; i++){ // looping through the collections and getting each value
+				text += x[i].value + '<br/>';
+			}
+
+			document.getElementById("demo").innerHTML = text;
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//function Chaining in clouser--> create an object first
+		var obj = function(){
+
+			var i = 1; // i is in clouser scope
+			
+			var add = function(newVal){
+				i += newVal;
+				return this;
+			};
+			var substract = function(newVal) {
+				i -= newVal;
+				return this;
+			};
+			var print = function(){
+				console.log("i is : "+i);
+			};
+			
+			return {
+				add:add,
+				substract:substract,
+				print:print
+			}
+		}
+
+		var x = obj();
+		x.add(3).substract(2).print();
+	</script>
+</body>
+</html>

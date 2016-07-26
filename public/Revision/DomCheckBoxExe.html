@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<style type="text/css">
+		#mostOuter {
+		    border: 1px solid black;
+		    height: 250px;
+		    margin-left: 100px;
+		    width: 300px;
+		}
+		#fruits {
+		    border: 1px solid red;
+		    float: left;
+		    width: 150px;
+		    margin-top: -16px;
+		}
+		#fruitCollections {
+		    margin-left: 152px;
+		    width: 147px;
+		}
+		ul li {
+		    list-style-type: none;
+		}
+		button {
+		    clear: both;
+		    margin-top: 60px;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="mostOuter">
+		<div id="inner">
+			<div id="fruits">
+				
+				<div class="inner"><input class="check" type="checkbox" id="ch1" ><span class="check">Apple</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch2" ><span class="check">Banana</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch3" ><span  class="check">Mango</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch4" ><span  class="check">Pineapple</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch5" ><span  class="check">Cherry</span></div>
+				<div><button class="myBtn" id="addBtn">Add New Fruit</button></div>
+						
+			</div>
+			<div id="fruitCollections">
+				<ul id="myUL">
+					
+				</ul>
+			</div>
+		</div>	
+	</div>
+	<script type="text/javascript">
+	//event captchring through DOM
+	document.getElementById("inner").addEventListener("click",function(e){
+		var flag = false;
+
+		var myEvent = e.target; //returns the element itelf, which has been clicked
+		
+		if(myEvent.tagName ==="INPUT"){
+			
+			if(myEvent.checked === true){
+				
+				flag = true;
+				process(flag,myEvent.nextSibling.innerHTML);
+			
+			}else if(myEvent.checked === false){
+				flag = false;
+				process(flag,myEvent.nextSibling.innerHTML);
+				
+			}
+		}else if(myEvent.tagName === "SPAN"){
+
+			myEvent.previousSibling.checked = !myEvent.previousSibling.checked;
+
+			if(myEvent.previousSibling.checked == true){
+				flag = true;
+				process(flag,myEvent.innerHTML);
+			}else if(myEvent.previousSibling.checked == false) {
+				flag = false;
+				process(flag,myEvent.innerHTML);
+			}
+
+		}else{
+			console.log("I am button");
+			var newFruit = prompt("Please add new fruit here");
+			var collec = document.getElementsByClassName('inner');
+			for(var i = 0; i < collec.length; i++ ){
+				if(collec[i].innerHTML === newFruit){
+					alert("This fruit is already in the list");
+					return;
+				}
+
+			}
+			addFruit(newFruit);
+		}
+
+	})
+
+	function process(flag,text){
+		if(flag == true){
+			var list = document.createElement("Li");
+			list.innerHTML = text;
+			document.getElementById("myUL").appendChild(list);
+
+		} else if(flag === false){
+			var fruitColl = document.querySelectorAll("#myUL li");
+
+			for(var i = 0; i < fruitColl.length;i++){
+				if(text === fruitColl[i].innerHTML){
+					fruitColl[i].parentNode.removeChild(fruitColl[i]);
+				}
+			}
+		}
+	}
+
+	function addFruit(newFruit){
+
+		var add = document.createElement("DIV");
+		add.innerHTML="<input type='checkbox' name="+newFruit+"><span>" +newFruit+ "</span>" ;
+		var list = document.getElementById('fruits');    
+		list.insertBefore(add,list.childNodes[0]);
+
+	}
+	
+
+
+	</script>
+
+</body>
+</html>

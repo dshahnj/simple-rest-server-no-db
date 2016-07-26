@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		//function Chaining --> create an object first
+		var obj = function(){
+			this.i = 1;
+			
+			this.add = function(newVal){
+				this.i += newVal;
+				return this;
+			}
+			this.substract = function(newVal) {
+				this.i -= newVal;
+				return this;
+			}
+			this.print = function(){
+				console.log("i is : "+this.i);
+			}
+		}
+		//create an instance of that object
+		var x = new obj();
+		x.add(3).substract(2).print();
+	</script>
+</body>
+</html>

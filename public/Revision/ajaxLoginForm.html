@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+	<form id="form1">
+		Username:<input type="text" class="cred" name="uname" value=""><br/>
+		password:<input type="text" class="cred" name="password" value=""><br/>
+		
+		<span><input id="myBtn" type="submit" value="submit"></span>
+	</form>
+	
+	<p id="demo"></p>
+
+	<script>
+		$(document).ready(function(){
+
+			$("#myBtn").on("click",function(e){
+				e.preventDefault();
+				console.log("Hello");
+				var collections = $(".cred");
+				console.log(collections[0].value);
+
+				var credentials = {
+					uname 	: collections[0].value,
+					password: collections[1].value
+				}
+				$.ajax({
+					url : '/users/50',
+					type: 'GET',
+					data: credentials,
+					success: function(response){
+						console.log(response.uname);
+						console.log(response.password);
+					}
+				})
+			})
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style type="text/css">
+		#mostOuter {
+		    border: 1px solid black;
+		    height: 250px;
+		    margin-left: 100px;
+		    width: 300px;
+		}
+		#fruits {
+		    border: 1px solid red;
+		    float: left;
+		    width: 150px;
+		    margin-top: -16px;
+		    position:relative;
+		}
+		#fruitCollections {
+		    margin-left: 152px;
+		    width: 147px;
+		    padding-left: 10px;
+		}
+		ul li {
+		    list-style-type: none;
+		}
+		#button {
+		    clear: both;
+		    top: 120px;
+		    position:absolute;
+		    bottom :0;
+		    left:0;
+		}
+
+
+
+
+	</style>
+</head>
+<body>
+	<div id="mostOuter">
+		<div id="inner">
+			<div id="fruits">
+				
+				<div class="inner"><input class="check" type="checkbox" id="ch1" ><span class="check">Apple</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch2" ><span class="check">Banana</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch3" ><span  class="check">Mango</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch4" ><span  class="check">Pineapple</span></div>
+				<div class="inner"><input class="check" type="checkbox" id="ch5" ><span  class="check">Cherry</span></div>
+				<div class="btn"><input type="button"  id="#button"  class="check" value="Add Fruit"/></div>
+						
+			</div>
+			<div id="fruitCollections">
+				<ul id="myUL">
+					
+				</ul>
+			</div>
+		</div>	
+	</div>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+			
+			$("#fruits").on("click",".check",function(){
+				console.log("in the fruits div");
+				var flag = false;
+				if($(this).prop('type') === "checkbox"){
+					console.log("I am input");
+					if($(this).prop('checked') === true){
+						flag = true;
+						console.log(flag);
+						process(flag,$(this).next().text());
+					}else if($(this).prop('checked') === false){
+						flag = false;
+						console.log(flag);
+						process(flag,$(this).next().text());
+					}
+					
+				}else if($(this).prop('type') === undefined) {
+					$(this).prev().prop('checked', !$(this).prev().prop('checked'));
+					if($(this).prev().prop('checked') === true){
+						flag = true;
+						process(flag,$(this).text());
+					}else if($(this).prev().prop('checked') === false) {
+						flag = false;
+						process(flag,$(this).text());
+					}
+					
+				}else if($(this).prop('type') === "button"){
+					var fruitName = prompt("Please enter new fruit name");
+						$('#fruits').children().each(function(){
+							if($(this).text().toUpperCase() === fruitName.toUpperCase()){
+								alert("This fruit is already in the list!");	
+							}
+							return;
+						});
+
+						//$(".fruits").append('<div class="inner"><input class="check" type="checkbox"><span class="check">'+fruitName+'</span></div>');
+						add(fruitName);
+					
+				}
+			});
+			function process(flag,text){
+				if(flag === true){ 
+					var str = "<div>"+text+"</div>";
+					$("#fruitCollections").append(str);
+				}else if(flag === false) {
+					$("#fruitCollections").children().each(function(){
+						if($(this).text() === text){
+							$(this).remove();
+						}
+					})
+				}
+			}
+
+			function add(fruitName){
+				var str = "<div class='inner'><input class='check' type='checkbox'><span class='check'>" + fruitName +"</span></div>";
+				$(".btn").prepend(str);
+				str
+			}
+		})
+
+
+
+		
+	</script>
+</body>
+</html>

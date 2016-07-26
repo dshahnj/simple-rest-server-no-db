@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<!-- Callback Function()
+Javascript gives us an option to do things a bit differently. Rather than wait around for a function to finish by returning a value, we can use callbacks to do it asynchronously. This is useful for things that take a while to finish, like making an AJAX request, because we aren’t holding up the browser. We can keep on doing other things while waiting for the callback to be called. In fact, very often we are required (or, rather, strongly encouraged) to do things asynchronously in Javascript.-->
+
+<script type="text/javascript">
+
+	function myFunction(arg1,arg2,callback){
+		var myNum = arg1 + arg2;
+		callback(myNum);
+	}
+
+	myFunction(10,20,function(num){
+		console.log("callback is called: "+num);
+	})
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
