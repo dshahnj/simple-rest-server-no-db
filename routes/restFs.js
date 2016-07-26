@@ -37,6 +37,7 @@ function listItems(req,res){
 }
 
 function createItem(req,res){
+
 	var name = req.params.modelName;
 	var dir = './data/'+name;
 	var fileName;
