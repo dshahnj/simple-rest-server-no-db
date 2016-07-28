@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		// patterns to create objects
+		// 1. literal
+		var myObj = {}; // empty object
+
+		var mango = {
+			color: "yellow",
+			shape: "round",
+			size: "small",
+			name: "name",
+
+			displayName: function(){
+				console.log(mango.name);
+			}
+			// for the simple object which may be used once in the application
+		}
+
+		// 2. constructor --> to create more than one objects which has same properties
+		// a blueprint, or a stucture of fruits
+		function fruits(color, shape,size,name){
+			this.color = color;
+			this.shape = shape;
+			this.size  = size;
+			this.name  = name;
+
+			this.displayName = function(){
+				console.log("This is a "+this.name);
+			}
+		}
+		// creating sort of fruits
+		var mango = new fruits("yellow","round","medium","Mango");
+		mango.displayName();
+
+		var cherry = new fruits("red","round","small","Cherry");
+		cherry.displayName();
+
+		// you can make any change in fruits property at one location and other object created thorugh constructor will have the same effect. This is an advantage of using constructor function
+
+		// Inhetance
+		mango.spice
+
+	</script>
+</body>
+</html>
