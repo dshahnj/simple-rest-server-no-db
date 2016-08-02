@@ -113,29 +113,34 @@
 			var ItemId = 0;
 
 			function MyObjectToHTML(jsonObj) {
+				
 
-				var str = "<div id='outerTag'><div class='row' ><div class='col-md-9'><div class='well'><div class='row'>";
+				var str = "<div class='outerTag' id='" +jsonObj.id + "'><div class='row' ><div class='col-md-9'><div class='well'><div class='row'>";
 				str += "<div class='col-sm-6'><h2>" + jsonObj.itemName +"</h2><p>"+ jsonObj.des +"</p></div>";
 				str += "<div class='col-sm-2'><div class='showPrice'><p>" + jsonObj.price + "</p></div></div>";
 				str += "<div class='col-sm-1'><button type='button' class='button-remove' name='btn1' ><span class='glyphicon glyphicon-remove'></span></button></div> ";
 				str += "</div></div></div></div></div>";
+
 				return str;
 			}
 
 //	        $(".button-remove").click().val();
 	        $(document).on("click",".button-remove",function(){
 
-				$(this).closest('#outerTag').remove();
-				console.log($(this).parent().parent());
-
-				//deleteItem(id)
+				$(this).closest('.outerTag').remove();
+				//console.log($(this).parent().parent().id());
+				
+				var itemID = $(this).closest(".outerTag").attr("id");
+				console.log("itemId: "+itemID);
+				deleteItem(itemID);
 
 	        });
 
-       		function deleteItem(id){
-
+       		function deleteItem(itemID){
+       			console.log("ItemID: "+itemID);
        			$.ajax({
-       				url:'/products' + id,
+       				url:'/products/' + itemID ,
+       				
        				type:'DELETE',
        				success: function (result) {
 		              alert(result);
@@ -186,7 +191,7 @@
 						console.log(response.itemName);
 						console.log(response.des);
 
-						$(".newList").append(MyObjectToHTML(response));
+						//$(".newList").append(MyObjectToHTML(response));
 
 						$('.userInput').val(""); // clears the input box
 						
@@ -202,8 +207,11 @@
 
 					for (var i=0; i < jsonObj.length; i++) {
 						
-						ItemId += jsonObj[i].id;
+
 						  str+= MyObjectToHTML(jsonObj[i]);
+
+						  console.log("str: "+ str);
+
 					}
 
 					$(".productsDiv").append(str);
@@ -213,6 +221,15 @@
 
 			
 			});
+/*
+
+str: <div class='outerTag'><div class='row' ><div class='col-md-9'><div class='well'><div class='row'><div class='col-sm-6'><h2>Soccer ball</h2><p>soccer ball</p></div><div class='col-sm-2'><div class='showPrice'><p>20</p></div></div><div class='col-sm-1'><button type='button' class='button-remove' name='btn1' ><span class='glyphicon glyphicon-remove'></span></button></div> </div></div></div></div></div>
+product...V2.html (line 209)
+
+
+
+*/
+
 			
 			$("#mySearch").on("change",function(){
 
