@@ -110,19 +110,51 @@
 	<script>
 		$(document).ready(function(){
 			
+			function MyObjectToHTML(jsonObj) {
+
+				var str = "<div id='outerTag'><div class='row' ><div class='col-md-9'><div class='well'><div class='row'>";
+				str += "<div class='col-sm-6'><h2>" + jsonObj.itemName +"</h2><p>"+ jsonObj.des +"</p></div>";
+				str += "<div class='col-sm-2'><div class='showPrice'><p>" + jsonObj.price + "</p></div></div>";
+				str += "<div class='col-sm-1'><button type='button' class='button-remove' name='btn1' ><span class='glyphicon glyphicon-remove'></span></button></div> ";
+				str += "</div></div></div></div></div>";
+				return str;
+			}
+
+//	        $(".button-remove").click().val();
+	        $(document).on("click",".button-remove",function(){
+
+				$(this).closest('#outerTag').remove();
+				//console.log($(this).parent().parent());
+	        });
+
+       
+
+
 			$("#myBtn").on("click",function(e){
 				
 				e.preventDefault();
-				
+
+				var inputValidation = {error:false, message: ""};
+
 				var productData = $(".userInput");
 
-				/*if(productData[0].value === '' || productData[1].value === '' || productData[2].value === '' ){
-					alert("Please check your input!");
-				} 
-				else if(isNaN(productData[2].value) === true ){
-					alert("Please enter correct price of the item");
-				}*/
+				if(productData[0].value === '' || productData[1].value === '' || productData[2].value === '' ){
+					inputValidation.error = true;
+					inputValidation.message = "Name or description empty, please enter it!";
+				}
+				if(isNaN(productData[2].value) === true ){
+					inputValidation.error = true;
+					inputValidation.message += "Price must be a number and cannot be empty";
+				}
+
+				if (inputValidation.error == true) {
+					alert(inputValidation.message);
+					return;
+				}
+
 				//console.log(productData[0].value);
+
+				$(".newList").show();
 
 				$.ajax({
 					url:  '/products',
@@ -138,14 +170,7 @@
 						console.log(response.itemName);
 						console.log(response.des);
 
-						var str = "<div class='row'><div class='col-md-9'><div class='well'><div class='row'>";
-						str += "<div class='col-sm-6'><h2>" + response.itemName +"</h2><p>"+ response.des +"</p></div>";
-						str += "<div class='col-sm-2'><div class='showPrice'><p>" + response.price + "</p></div></div>";
-						str += "<div class='col-sm-1'><p> <a href='#'><span class='glyphicon glyphicon-remove'></span></a></p></div> ";
-						str += "</div></div></div></div>";
-						
-
-						$(".newList").append(str);
+						$(".newList").append(MyObjectToHTML(response));
 
 						$('.userInput').val(""); // clears the input box
 						
@@ -158,15 +183,9 @@
 					var jsonObj = data;
 					console.log(jsonObj.length+" "+typeof(jsonObj));
 					var str = ""; 
-					 for (var i=0; i < jsonObj.length; i++) {
-						  
-						  str += "<div class='row'><div class='col-md-9'><div class='well'><div class='row'>";
-						   str += "<div class='col-sm-6'><h2>" + jsonObj[i].itemName +"</h2><p>"+ jsonObj[i].des +"</p></div>";
-						   str += "<div class='col-sm-2'><div class='showPrice'><p>" + jsonObj[i].price + "</p></div></div>";
-						   str += "<div class='col-sm-1'><p> <a href='#'><span class='glyphicon glyphicon-remove'></span></a></p></div> ";
-						   str += "</div></div></div></div>";
 
-						   //$(".productsDiv").append(str);
+					for (var i=0; i < jsonObj.length; i++) {
+						  str+= MyObjectToHTML(jsonObj[i]);
 					}
 
 					$(".productsDiv").append(str);
@@ -176,6 +195,7 @@
 			});
 			
 			$("#mySearch").on("change",function(){
+
 				var searchItem = $("#mySearch").val();
 				console.log("searchItem: "+searchItem);
 
@@ -187,17 +207,12 @@
 					var str = ""; 
 
 					for (var i=0; i < jsonObj.length; i++) {
-						if (jsonObj[i].itemName.includes(searchItem) || jsonObj[i].des.includes(searchItem)) {
-						  str += "<div class='row'><div class='col-md-9'><div class='well'><div class='row'>";
-						   str += "<div class='col-sm-6'><h2>" + jsonObj[i].itemName +"</h2><p>"+ jsonObj[i].des +"</p></div>";
-						   str += "<div class='col-sm-2'><div class='showPrice'><p>" + jsonObj[i].price + "</p></div></div>";
-						   str += "<div class='col-sm-1'><p> <a href='#'><span class='glyphicon glyphicon-remove'></span></a></p></div> ";
-						   str += "</div></div></div></div>";
-
+						if (jsonObj[i].itemName.toUpperCase().includes(searchItem.toUpperCase()) || jsonObj[i].des.toUpperCase().includes(searchItem.toUpperCase())) {
+						  str += MyObjectToHTML(jsonObj[i]);
 						}
-						   //$(".productsDiv").append(str);
 					}
 
+					$(".newList").hide();
 					$(".productsDiv").html(str);
 				});
 
