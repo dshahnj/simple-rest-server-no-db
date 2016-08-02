@@ -1,0 +1,154 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>Bootstrap Excersices</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/myCss.css">
+
+</head>
+<body>
+	<!-- fixed navbar-->
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<!--for Header -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">Creativity Darshan</a>
+			</div>
+
+			<div class="navbar-collapse collapse">
+			<!-- to toggle links when the resolution is of mobile-->
+				<ul class="nav navbar-nav">
+					<li><a href="#"> Home</a></li>
+					<li><a href="#"> About</a></li>
+					<li><a href="#"> Features</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Tutrorials <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Tutorial 1</a></li>
+								<li><a href="#">Tutorial 2</a></li>
+								<li><a href="#">Tutorial 3</a></li>
+								<li><a href="#">Tutorial 4</a></li>
+							</ul>
+
+					</li>
+					<li><a href="#"> Contact</a></li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+	
+	<!-- Form -->
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Contact Form</h2> <hr/>
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" placeholder="Enter Name......" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="email" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-6">
+							<input type="email" class="form-control" placeholder="Enter Email......" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="message" class="col-sm-2 control-label">Message</label>
+						<div class="col-sm-6">
+							<textarea class="form-control" raws="3" placeholder="Enter Message..."></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="website" class="col-sm-2 control-label">Favorite Websites</label>
+						<div class="col-sm-6">
+							<label class="checkbox-inline">
+								<input type="checkbox" value="option1" />Youtube
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" value="option2" />Google
+							</label>
+							<label class="checkbox-inline">	
+								<input type="checkbox" value="option3" />Twitter
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="gender" class="col-sm-2 control-label">Gender</label>
+						<div class="col-sm-6">
+							<label class="radio-inline">
+								<input type="radio" value="option1" name="genderRadio" />Male
+							</label>
+							<label class="radio-inline">
+								<input type="radio" value="option2" name="genderRadio" />Female
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="city" class="col-sm-2 control-label">City</label>
+						<div class="col-sm-6">
+							<select class="form-control">
+								<option>Orange</option>
+								<option>NJ</option>
+								<option>Teaneck</option>
+
+							</select>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal and Footer ------ -->
+	<div class="container footer">
+		<div class="row">
+			<div class="col-md-12">
+				
+				<hr/>
+				<p>Copyright &copy: Creativity Tuts
+					<a href="#myModal" data-toggle="modal">Terms and Conditions</a>
+				</p>
+				<!------Modal     ------ -->
+				<div class="modal fade" id="myModal" tabinex="-1" role="dialog" area-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h2>Terms and Conditions</h2>
+							</div>
+							<div class="modal-body">
+								<p>The text will go here</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+	</div>
+
+	<script  src="../js/bootstrap.js"></script>
+</body>
+</html>

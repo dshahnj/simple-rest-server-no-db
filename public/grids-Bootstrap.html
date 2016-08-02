@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bootstrap Excersices</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/myCss.css">
+</head>
+<body>
+
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<!--for Header -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">Creativity Darshan</a>
+			</div>
+
+			<div class="navbar-collapse collapse">
+			<!-- to toggle links when the resolution is of mobile-->
+				<ul class="nav navbar-nav">
+					<li><a href="index.html"> Home</a></li>
+					<li><a href="about.html"> About</a></li>
+					<li><a href="feature.html"> Features</a></li>
+
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Tutrorials <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Tutorial 1</a></li>
+								<li><a href="#">Tutorial 2</a></li>
+								<li><a href="#">Tutorial 3</a></li>
+								<li><a href="#">Tutorial 4</a></li>
+							</ul>
+
+					</li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+
+
+				<hr/>
+				<p>Copyright &copy: Creativity Tuts
+					<a href="#myModal" data-toggle="modal">Terms and Conditions</a>
+				</p>
+				<!-- Model ---->
+				<div class="modal fade" id="myModal" tabinex="-1" role="dialog" area-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h2>Terms and Conditions</h2>
+							</div>
+							<div class="modal-body">
+								<p>The text will go here</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+</html>

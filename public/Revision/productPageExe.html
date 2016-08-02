@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Bootstrap Excersices</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/myCss.css">
+
+</head>
+
+<body>
+
+	<!-- Fixed navbar ================= -->
+	<div class="navbar navbar-default navbar-fixed-top">
+
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">Store</a>
+			</div>
+
+
+			<div class="navbar-collapse collapse">
+			<!-- to toggle links when the resolution is of mobile-->
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="catalog.html">Catalog</a></li>
+					<li><a href="contact.html"> Contact</a></li>
+				</ul>
+			</div>
+			
+		</div>
+
+	</div>
+
+	<!-- Body Part =================  -->
+	<br/><br/>
+		
+	<div class="container">
+		<div class="row" style="margin-left:-20px">
+
+			<!-- left side options ============= -->
+
+				<div class="col-md-3">
+					<div class="list-group" style="margin-left:-20px">
+					  <a href="#" class="list-group-item active">
+					    Cras justo odio
+					  </a>
+					  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+					  <a href="#" class="list-group-item">Morbi leo risus</a>
+					  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+					  <a href="#" class="list-group-item">Vestibulum at eros</a>
+					</div>
+				</div>
+
+			<!-- right side options ============= -->	
+
+				<div class="col-md-9">
+					
+					<!-- first row ============= -->
+						<div class="form-group row">
+							  <label for="example-search-input" class="col-sm-1 col-form-label">Search</label>
+							  <div class="col-sm-4 nopadding">
+							    <input id="mySearch" class="form-control" type="search" placeholder="Search by item name" >
+							  </div>
+						</div>
+
+						<!-- second row ============= -->
+
+						<div class="form-group row">
+					  		<div class="col-sm-1 col-form-label">
+					  			<span><label for="example-search-input" >Add Item  </label></span>
+				  			</div>
+					  		<div class="col-sm-3 nopadding" >
+				    			<span><input class="form-control userInput" type="text" placeholder="Item name" value="" 
+				    			name="itemName"></span>
+						   	</div>
+						   	<div class="col-sm-3 no-right-padding">
+						    	<span><input class="form-control userInput" type="text" placeholder="Description" value=""
+						    	name="des"></span>
+						   	</div>
+						   	<div class="col-sm-3 no-right-padding" >
+						    	<span><input class="form-control userInput" type="text" placeholder="Price" value=""
+						    	name="price"></span>
+						   	</div>
+					   		<div class="col-sm-1 no-right-padding">
+						    	<button id="myBtn" class="form-control btn btn-primary">Add</button>
+			   				</div>
+						</div>
+
+					<!-- next rows ============= -->
+
+					<div class="container newList">
+						
+					</div>
+					<div class="container productsDiv">
+					</div>
+			</div>
+		</div>
+		
+	</div>
+	<script>
+		$(document).ready(function(){
+			
+			$("#myBtn").on("click",function(e){
+				
+				e.preventDefault();
+				
+				var productData = $(".userInput");
+
+				/*if(productData[0].value === '' || productData[1].value === '' || productData[2].value === '' ){
+					alert("Please check your input!");
+				} 
+				else if(isNaN(productData[2].value) === true ){
+					alert("Please enter correct price of the item");
+				}*/
+				//console.log(productData[0].value);
+
+				$.ajax({
+					url:  '/products',
+					type: 'POST',
+					data: {
+						itemName: productData[0].value,
+						des: 		productData[1].value,
+						price:    productData[2].value,
+					},
+
+					success:function(response){
+						console.log(response);
+						console.log(response.itemName);
+						console.log(response.des);
+
+						var str = "<div class='row'><div class='col-md-9'><div class='well'><div class='row'>";
+						str += "<div class='col-sm-6'><h2>" + response.itemName +"</h2><p>"+ response.des +"</p></div>";
+						str += "<div class='col-sm-2'><div class='showPrice'><p>" + response.price + "</p></div></div>";
+						str += "<div class='col-sm-1'><p> <a href='#'><span class='glyphicon glyphicon-remove'></span></a></p></div> ";
+						str += "</div></div></div></div>";
+						
+
+						$(".newList").append(str);
+
+						$('.userInput').val(""); // clears the input box
+						
+					}
+					
+				});
+
+				$.get('/products',function(data){
+					console.log(data);
+					var jsonObj = data;
+					console.log(jsonObj.length+" "+typeof(jsonObj));
+					var str = ""; 
+					 for (var i=0; i < jsonObj.length; i++) {
+						  
+						  str += "<div class='row'><div class='col-md-9'><div class='well'><div class='row'>";
+						   str += "<div class='col-sm-6'><h2>" + jsonObj[i].itemName +"</h2><p>"+ jsonObj[i].des +"</p></div>";
+						   str += "<div class='col-sm-2'><div class='showPrice'><p>" + jsonObj[i].price + "</p></div></div>";
+						   str += "<div class='col-sm-1'><p> <a href='#'><span class='glyphicon glyphicon-remove'></span></a></p></div> ";
+						   str += "</div></div></div></div>";
+
+						   //$(".productsDiv").append(str);
+					}
+
+					$(".productsDiv").append(str);
+				});
+
+			
+			});
+			
+			$("#mySearch").on("change",function(){
+				var searchItem = $("#mySearch").val();
+				console.log("searchItem: "+searchItem);
+
+
+				$.get('/products',function(data){
+					//console.log(data);
+					var jsonObj = data;
+					//console.log(jsonObj.length+" "+typeof(jsonObj));
+					var str = ""; 
+
+					for (var i=0; i < jsonObj.length; i++) {
+						if (jsonObj[i].itemName.includes(searchItem) || jsonObj[i].des.includes(searchItem)) {
+						  str += "<div class='row'><div class='col-md-9'><div class='well'><div class='row'>";
+						   str += "<div class='col-sm-6'><h2>" + jsonObj[i].itemName +"</h2><p>"+ jsonObj[i].des +"</p></div>";
+						   str += "<div class='col-sm-2'><div class='showPrice'><p>" + jsonObj[i].price + "</p></div></div>";
+						   str += "<div class='col-sm-1'><p> <a href='#'><span class='glyphicon glyphicon-remove'></span></a></p></div> ";
+						   str += "</div></div></div></div>";
+
+						}
+						   //$(".productsDiv").append(str);
+					}
+
+					$(".productsDiv").html(str);
+				});
+
+			})
+		})
+
+	</script>
+	<script  src="../js/bootstrap.js"></script>
+</body>
+</html>
+
+

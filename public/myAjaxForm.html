@@ -10,11 +10,23 @@
 	Last Name:<input class="inForm" type="text" name="lname" value=""><br/>
 	<span><input id="myBtn" type="submit" value="submit"></span>
 
-	<div id="myDiv"></div>
+	<div id="currentData">
+		<p id="fname"></p>
+		<p id="lname"></p>
+	</div>
+
+	<div class="currentData">
+		
+	</div>
+	<div id="myDiv">
+	</div>
+	
 
 	<script>
 	     // data : { foo : 'bar', bar : 'foo' },
 		$(document).ready(function(){
+
+
 			$("#myBtn").on("click",function(e){
 				e.preventDefault();
 				var x = $(".inForm");
@@ -26,17 +38,19 @@
 						lname:x[1].value
 					},
 					success:function(response){
-						console.log(response);
-						//console.log($("#fn").text(response.fname));
-						//console.log($("#ln").text(response.lname));
+						console.log(response.fname);
+						console.log(response.lname);
+						$(".currentData").append("First name: " + response.fname + "<br/>" + "Last name: " + response.lname + "<br/>");
+
+						
 					}
 				});
-
+				
 				$.get('/users',function(data,status){
 					var jsonObj = data;
 					var html = '<table border= "1" >';
 					html += '<tr><th>FirstName</th><th>LastName</th></tr>';
-					console.log("jsonObj: "+jsonObj);
+					//console.log("jsonObj: "+jsonObj);
 					for(var i = 0; i < jsonObj.length; i++){
 
 						html += '<tr><td>' + jsonObj[i].fname + '</td><td>' + jsonObj[i].lname + '</td></tr>';

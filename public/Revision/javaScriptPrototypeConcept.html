@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+	// prototype property
+
+	function OriginalPrint(myDocument){
+		this.documents = myDocument;
+	}
+
+	OriginalPrint.prototype.print = function(){
+		console.log(this.documents);
+	}
+	var newObj = new OriginalPrint("I am a student");
+	newObj.print();
+
+	//prototype attribute or parent
+	/*
+		All objects created with object literals and with the Object constructor inherits from Object.prototype. Therefore, Object.prototype is the prototype attribute (or the prototype object) of all objects created with new Object () or with {}. Object.prototype itself does not inherit any methods or properties from any other object.
+	*/
+	/* inheritance example, Super class */
+
+	function Plant(){
+		this.country = "India";
+		this.isOrganic = true;
+	}
+
+	// add prototype
+	Plant.prototype.showNameAndColor = function(){
+
+		console.log("I am "+ this.name +" with "+this.color);
+
+	}
+	Plant.prototype.amIOrganic = function(){
+		if(this.isOrganic){
+			console.log("I am absolutly organic");
+		}
+	}
+/*-----------------------------------------------------------------*/
+	// new Fruit function (class)
+	function Fruit(name,color){
+		this.name = name;
+		this.color = color;
+	}
+
+	// set Fruit's prototype to Plant
+
+	Fruit.prototype = new Plant();
+
+	// create new fruit object
+
+	var cherry = new Fruit("Cherry","red");
+	cherry.amIOrganic();
+	cherry.showNameAndColor();
+	console.log(cherry.name + " and " + cherry.color);
+
+
+
+
+
+</script>
+</body>
+</html>
