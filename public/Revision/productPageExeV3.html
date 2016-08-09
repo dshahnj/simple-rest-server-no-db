@@ -213,6 +213,11 @@
 
                    displayData(data, true);
     			});*/
+				 $.get('/products',function(data){
+					console.log(data);
+
+                   displayData(data, true);
+    			});
 			
 			});
 			
@@ -237,6 +242,11 @@
                                                return obj.itemName.toUpperCase().
                                                includes(searchItem.toUpperCase());;
                                          });
+
+                                    var searchResult = $.grep(searchData, function(obj,index){ 
+                                                                                            console.log(obj.itemName);
+                                                                                            return obj.itemName.toUpperCase().includes(searchItem.toUpperCase());
+                                                                                        })
                                     console.log(searchResult); 
 
                                     displayData(searchResult, true);
@@ -248,7 +258,11 @@
 			
 			}); 
 			
-			
+				// $(".newList").hide();
+				// $(".productsDiv").html(getSearchItem());
+
+			}); 
+
 			function getSearchItem(searchItemm, funcCodePointer){
 				
 				$.get('/products', funcCodePointer);
