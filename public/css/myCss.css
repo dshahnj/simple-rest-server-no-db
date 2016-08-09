@@ -19,7 +19,7 @@ body{
 	padding-top: 30px;
 }
 .leftContainer{
-	margin-left:5px;
+	padding-left:0;
 }
 
 .nopadding {
@@ -42,4 +42,9 @@ body{
 }
 h2{
 	margin-top:20px;
+}
+// force inline control to fit container width
+// http://getbootstrap.com/css/#forms-inline
+.form-inline .form-control {
+    width: 100%;
 }
