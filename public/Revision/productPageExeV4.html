@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FinalProductPageExercise</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<!--	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/myCss.css">
+ -->
+</head>
+<body>
+	<!============= responsive header ======= -->
+		<nav class="navbar navbar-inverse ">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#" class="navbar-brand">Store</a>
+				</div>
+
+
+				<div class="navbar-collapse collapse">
+				<!-- to toggle links when the resolution is of mobile-->
+					<ul class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="about.html">About</a></li>
+						<li><a href="catalog.html">Catalog</a></li>
+						<li><a href="contact.html"> Contact</a></li>
+					</ul>
+				</div>
+				
+			</div>
+		</nav>
+
+		<! ============= Body part=========== -->
+
+		<div class="container-fluid" >
+			<div class="row">
+
+				<!========= left side =========/>
+
+				<div class="col-md-3">
+					
+					<div class="list-group container-fluid" >
+						  <a href="#" class="list-group-item active">Cras justo odio</a>
+						  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+						  <a href="#" class="list-group-item">Morbi leo risus</a>
+						  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+						  <a href="#" class="list-group-item">Vestibulum at eros</a>
+					</div>
+
+				</div>
+
+				<!========= right side =========/>
+
+				<div class="col-md-9">
+
+						<!-- first row ============= -->
+
+						<div class="form-group row">
+							  <label for="example-search-input" class="col-sm-1 col-form-label">Search</label>
+							  <div class="col-sm-4 ">
+								<input id="mySearch" class="form-control" type="search" placeholder="Search by item name" >
+							  </div>
+						</div>
+
+						<!-- second row ============= -->
+
+						<div class=" container-fluid form-group row">
+						  <form class="form-inline" role="form">
+							  <label for="example-search-input" class="col-sm-2 ">Add Item</label>
+							  <div >
+								  <input class="form-control userInput" type="text" placeholder="Item name"
+								   value="" name="itemName">
+								  <input class="form-control userInput" type="text" placeholder="Description" 
+								  value="" name="des">
+								  <input class="form-control userInput" type="text" placeholder="Price" 
+								  value="" name="price">
+								  <button id="myBtn" class="form-control btn btn-primary">Add</button>
+							  </div>
+						  </form>
+						</div>
+
+						<!-- next rows ============= -->
+
+					<div class="container newList">
+						
+					</div>
+
+					<div class="container productsDiv">
+						<script id="template2" type="text/x-handlebars-template">
+							{{#each this}}
+								<div class='outerTag' id={{id}}>
+									<div class='row'>
+										
+											<div class='well'>
+												
+													<div class='col-sm-6'>
+														<h2>{{itemName}}</h2>
+														<p>{{des}}</p>
+													</div>
+													<div class='col-sm-2'>
+														<div class='showPrice'>
+															<p>{{price}}</p>
+														</div>
+													</div>
+													<div class='col-sm-1'><button type='button' class='button-remove' name='btn1' ><span class='glyphicon glyphicon-remove'></span></button>
+													</div>
+												
+											</div>
+										
+									</div>
+								</div>
+							{{/each}}		
+
+						</script>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script>
+		$(document).ready(function(){
+
+//	        $(".button-remove").click().val();
+			$(document).on("click",".button-remove",function(){
+
+				$(this).closest('.outerTag').remove();
+				//console.log($(this).parent().parent().id());
+				
+				var itemID = $(this).closest(".outerTag").attr("id");
+				console.log("itemId: "+itemID);
+				deleteItem(itemID);
+
+			});
+
+			function deleteItem(itemID){
+				console.log("ItemID: "+itemID);
+				$.ajax({
+					url:'/products/' + itemID ,
+					
+					type:'DELETE',
+					success: function (result) {
+					  alert(result);
+					}
+
+				});
+
+			}
+
+
+			$("#myBtn").on("click",function(e){
+				
+				e.preventDefault();
+
+				var inputValidation = {error:false, message: ""};
+
+				var productData = $(".userInput");
+				console.log("productData: "+productData);
+
+				/*if(productData[0].value === '' || productData[1].value === '' || productData[2].value === '' ){
+					inputValidation.error = true;
+					inputValidation.message = "Name or description empty, please enter it!";
+				}
+				if(isNaN(productData[2].value) === true ){
+					inputValidation.error = true;
+					inputValidation.message += "Price must be a number and cannot be empty";
+				}
+
+				if (inputValidation.error == true) {
+					alert(inputValidation.message);
+					return;
+				}*/
+
+				//console.log(productData[0].value);
+
+				$(".newList").show();
+
+				$.ajax({
+					url:  '/products',
+					type: 'POST',
+					data: {
+						itemName: productData[0].value,
+						des: 		productData[1].value,
+						price:    productData[2].value,
+					},
+
+					success:function(response){
+						//displayData([response],true);
+					
+						$('.userInput').val(""); // clears the input box
+						
+					}
+					
+				});
+
+				$.get('/products',function(data){
+					console.log(data);
+
+                   displayData(data, true);
+    			});
+			
+			});
+			
+			$("#mySearch").on("keyup",function(){
+
+				//no need to get data from the server
+				// get data from the div ============
+
+				var searchItem = $("#mySearch").val();
+				console.log("searchItem: "+searchItem);
+
+
+                var funcCodePointer = function (data) {
+
+                                    var searchData = data;
+
+                                    console.log("searchData: "+searchData);
+
+                                    var searchResult = $.grep(searchData, function(obj,index){ 
+                                                                                            console.log(obj.itemName);
+                                                                                            return obj.itemName.toUpperCase().includes(searchItem.toUpperCase());
+                                                                                        })
+                                    console.log(searchResult); 
+
+                                    displayData(searchResult, true);
+
+                 };
+
+                getSearchItem(searchItem, funcCodePointer);
+
+				// $(".newList").hide();
+				// $(".productsDiv").html(getSearchItem());
+
+			});
+
+			function getSearchItem(searchItemm, funcCodePointer){
+				
+				$.get('/products', funcCodePointer);
+
+               // return searchResult;
+			};
+
+            function displayData(data, clean) {
+            	console.log(data);
+				var template = Handlebars.compile($('#template2').html());
+
+				if (clean == true) { $(".newList").html(''); }
+
+				$(".newList").append(template(data));
+            }
+
+		})
+
+	</script>
+	<script src="https://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script> 
+
+	<script  src="../js/bootstrap.js"></script>
+
+</body>
+</html>

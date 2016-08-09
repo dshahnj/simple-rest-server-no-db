@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello Handlebars</title>
+	<style>
+		h2 span {
+			color:gray;
+			font-size: .8em;
+		}
+	</style>
+</head>
+
+<body>
+	<! =========== Structure ==== -->
+	<ul class="tweets">
+		<script id="template" type="text/x-handlebars-template">
+		{{#each this}}
+			<li>
+				<h2>{{fullName author}}</h2>
+				<p>{{{tweet}}}</p>
+
+				{{#if quote}}
+					<h5>{{quote}}</h5>
+				{{else}}
+					<h5>There is no quote</h5>
+				{{/if}}	
+			</li>
+
+		{{/each}}
+		</script>
+	</ul>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
+
+	<script type="text/javascript">
+
+	/* function which has data, crates template through handlebar and attaches data to the template */
+
+		(function(){
+
+			data = [
+				{
+					author: { firstName:'Darshana', lastName:'Shah', age:'27'},
+					tweet: 'Hello, How are you?',
+					quote: 'Never ever ever ever give up'
+
+				},
+				{
+					author: { firstName:'Pinal', lastName:'Shah', age:'27'},
+					tweet: 'Hello, <strong>How are you?</strong>'
+					
+				},
+				{
+					author: { firstName:'Harshil', lastName:'Shah',age:'22'},
+					tweet: 'Hello, How are you?'
+					
+				}
+			];
+			Handlebars.registerHelper('fullName',function(author){
+
+				return author.firstName + " " + author.lastName + " - " + author.age;
+			});
+
+			/* attach above data to the template*/
+			var template = Handlebars.compile($('#template').html());
+			
+			var temp = template(data);
+
+			$('ul.tweets').append(template(data));
+
+			
+
+		})();
+	</script>
+</body>
+</html>
