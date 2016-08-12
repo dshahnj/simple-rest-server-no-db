@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Angular Exes.</title>
+		<script src="lib/angular/angular_1.5.8.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers/myController.js"></script>
+</head>
+<body ng-controller="myController">
+
+	<div>
+		<div>
+			First Name:<input type="text" ng-model="firstname">
+		</div>
+		<div>
+			Last Name:<input type="text" ng-model="lastname">
+		</div>
+	</div>
+	<div>
+		<div>
+			FirstName:{{reverse(firstname)}}
+		</div>
+		<div>
+			Last Name:{{reverse(lastname)}}
+		</div>
+	</div>
+	<div>
+		FirstName: <input type="text" ng-model="name">{{name}}
+	</div>
+
+</body>
+</html>

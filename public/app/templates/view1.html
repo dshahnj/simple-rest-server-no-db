@@ -1,0 +1,19 @@
+<div>
+	<h2>View1</h2>
+
+	<a href="#/view2">view2</a>
+
+	<div>
+		<table class="table table-stripped">
+			<thead>
+				<tr><th>Name</th><th>City</th></tr>
+			</thead>
+			<tbody ng-repeat="cust in customers">
+				<tr>
+				<td>{{cust.name}}</td>
+				<td>{{cust.city}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

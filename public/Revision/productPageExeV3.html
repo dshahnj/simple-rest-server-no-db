@@ -243,11 +243,8 @@
                                                includes(searchItem.toUpperCase());;
                                          });
 
-                                    var searchResult = $.grep(searchData, function(obj,index){ 
-                                                                                            console.log(obj.itemName);
-                                                                                            return obj.itemName.toUpperCase().includes(searchItem.toUpperCase());
-                                                                                        })
-                                    console.log(searchResult); 
+                                    var searchResult = $.grep(searchData, function(obj,index){
+                                    	console.log(searchResult); 
 
                                     displayData(searchResult, true);
 

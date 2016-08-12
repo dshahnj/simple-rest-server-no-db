@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title></title>
+	<script src="lib/angular/angular_1.5.8.js"></script>
+	
+    <script src="js/app.js"></script>
+    <script src="js/controllers/mainController.js"></script>
+</head>
+<body>
+
+<p id="demo"></p>
+<p id="demo1"></p>
+
+<p id="demo2"></p>
+<p id="demo3"></p>
+
+Actual time:<span><label id="time"></label></span>
+<div>
+<span><label id="hour"></label></span>
+<span><label id="minute"></label></span>
+<span><label id="second"></label></span>
+<span><label id="milliseconds"></label></span>
+<span><label id="period"></label></span>
+
+
+</div>
+<script>
+
+function myWatch() {
+	var period ="";
+	var d = new Date();
+	var currHours = d.getHours();
+
+	var currMinutes = d.getMinutes();
+	var currSecond = d.getSeconds();
+	var currMS = d.getMilliseconds();
+	var timeOfDay;
+
+	if(currMinutes < 10 ){
+		" 0 "+ currMinutes
+	}
+	if(currSecond < 10){
+		" 0 " + currSecond;
+	}
+	timeOfDay = ( currHours < 12 ) ? "AM" : "PM";
+
+	currHours = ( currHours > 12 ) ? currHours - 12 : currHours;
+
+	currHours = ( currHours == 0 ) ? 12 : currHours;
+
+
+	document.getElementById("time").innerHTML = d;
+
+	document.getElementById("hour").innerHTML = currHours;
+
+	document.getElementById("minute").innerHTML = currMinutes;
+
+	document.getElementById("second").innerHTML = currSecond;
+
+	document.getElementById("milliseconds").innerHTML = currMS;
+
+	document.getElementById("period").innerHTML = timeOfDay;
+
+}
+setInterval(myWatch,1);
+
+
+</script>
+
+</body>
+</html>
+
+
+

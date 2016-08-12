@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Test file</title>
+
+	<script src="lib/angular/angular_1.5.8.js"></script>
+	
+    <script src="js/app.js"></script>
+    <script src="js/controllers/mainController.js"></script>
+	<style>
+		table{
+			border-collapse: collapse;
+			font-family:Arial;
+		}
+		td{
+			border:1px solid black;
+			padding:5px;
+		}
+		th{
+			border:1px solid black;
+			padding:5px;
+			text-align:left;
+		}
+	</style>
+
+</head>
+
+  <body ng-controller="mainController">
+	<div>
+		FirstName:<input type="text" ng-model="employee.firstname" />
+	</div>
+	<div>
+		LastName:<input type="text" ng-model="employee.lastname" />
+	</div>
+	<div>
+		Gender:<input type="text" ng-model="employee.gender" />
+	</div>
+	{{employee.firstname}}
+	{{employee.lastname}}
+	{{employee.gender}}
+	<br/>
+	<br/>
+	<br/>
+	<hr/>
+	<div>
+		Select View:
+		<select ng-model="employeeView">
+			<option value="employeeTable.html">Table</option>
+			<option value="employeeList.html">List</option>
+		</select>
+		<br/>
+		<br/>
+		<div ng-include="employeeView"></div>
+	</div>
+	
+	<br/>
+	<br/>
+	<br/>
+	<hr/>
+	<div>
+		<ul>
+			<li ng-repeat="country in countries">
+				{{country.name}}
+				<ul>
+					<li ng-repeat = "city in country.cities">
+						{{city.name}}
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<br/>
+	<br/>
+	<hr/>
+	<div>
+		<table >
+			<tr>
+				<th>Name</th>
+				<th>Likes</th>
+				<th>Dislikes</th>
+				<th>Likes/Dislikes</th>
+			</tr>
+			<tr ng-repeat="technology in technologies">
+				<td>{{technology.name}}</td>
+				<td>{{technology.likes}}</td>
+				<td>{{technology.dislikes}}</td>
+				<td>
+					<input type="button" value="Like" ng-click="incrementLikes(technology)">
+					<input type="button" value="Dislike" ng-click="incrementDisLikes(technology)">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div ng-view></div>
+
+	
+
+</body>
+</html>

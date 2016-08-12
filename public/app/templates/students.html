@@ -1,0 +1,29 @@
+<div>
+	<h2>Fill the students info</h2>
+</div>
+<div>
+	<form>
+		<div>First Name:<input type="text" ng-model="fname"></div>
+		<div>Last Name:<input type="text" ng-model="lname"></div>
+		fitstname:{{fname}}
+		lastname:{{lname}}
+		<br/>
+		<div><input type="button" value="Click Me!" ng-click="addStudents(fname,lname)"></div>	
+	</form>
+
+</div>
+<div>
+	<h2>Get Students Information</h2>
+	<div>
+		<table>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+			</tr>
+			<tr ng-repeat="student in students">
+				<td>{{student.fname}}</td>
+				<td>{{student.lname}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
