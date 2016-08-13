@@ -10,14 +10,18 @@ app.controller("studentsController",function($scope,studentsService){
 		$scope.fname = fname;
 		$scope.lname = lname;
 		console.log(fname + " "+ lname);
+
 		studentsService.addStudents(fname,lname).then(
 			function(response){
 				var result = response.data;
 				alert(result.fname + " " + result.lname +" is successfully added in the list");
-
+				$scope.getStudents();
+				
 			}, function(error){
 				console.log("Error : "+error);
 			});
+
+
 	}
 
 	$scope.getStudents = function() {
