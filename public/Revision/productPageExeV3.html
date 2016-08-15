@@ -5,9 +5,9 @@
 	<title>Bootstrap Excersices</title>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="../css/myCss.css">
+	<link rel="stylesheet" type="text/css" href="/css/myCss.css">
 
 </head>
 
@@ -73,11 +73,11 @@
 
 						<!-- second row ============= -->
 
-						<div class="form-group row">
+						<div class="form-group row" id="myD">
 						  <form class="form form-inline" role="form">
 							  <label for="example-search-input" class="col-sm-2 col-form-label">Add Item</label>
 							  <div class="nopadding" style="margin-left: 5px">
-								  <input class="form-control userInput" type="text" placeholder="Item name" value="" 
+								  <input class="userInput form-control " type="text" placeholder="Item name" value="" 
 									name="itemName">
 								  <input class="form-control userInput" type="text" placeholder="Description" value=""
 									name="des">
@@ -94,7 +94,7 @@
 						
 					</div>
 
-					<div class="container productsDiv">
+					<div class="container templateDiv">
 						<script id="template2" type="text/x-handlebars-template">
 							{{#each this}}
 								<div class='outerTag' id={{id}}>
@@ -103,7 +103,7 @@
 											<div class='well'>
 												<div class='row'>
 													<div class='col-sm-6'>
-														<h2>{{itemName}}</h2>
+														<h2 class="productsDiv">{{itemName}}</h2>
 														<p>{{des}}</p>
 													</div>
 													<div class='col-sm-2'>
@@ -128,11 +128,17 @@
 	</div>
 	<script>
 		$(document).ready(function(){
+			var myArrayList = [];
+
+            getDataFromServer();
 
 	        function getDataFromServer(){
 
 	        	$.get('/products',function(data){
 					console.log(data);
+
+					myArrayList.push(data);
+
 
                    displayData(data, false);
     			});
@@ -156,7 +162,7 @@
 					
 					type:'DELETE',
 					success: function (result) {
-					  alert(result);
+					  alert(result + "is deleted");
 					}
 
 				});
@@ -164,29 +170,9 @@
 			}
 
 
-			$("#myBtn").on("click",function(e){
+			$("#myD").on("click","#myBtn",function(e){
 				
 				e.preventDefault();
-
-				var inputValidation = {error:false, message: ""};
-
-				var productData = $(".userInput");
-
-				if(productData[0].value === '' || productData[1].value === '' || productData[2].value === '' ){
-					inputValidation.error = true;
-					inputValidation.message = "Name or description empty, please enter it!";
-				}
-				if(isNaN(productData[2].value) === true ){
-					inputValidation.error = true;
-					inputValidation.message += "Price must be a number and cannot be empty";
-				}
-
-				if (inputValidation.error == true) {
-					alert(inputValidation.message);
-					return;
-				}
-
-				//console.log(productData[0].value);
 
 				$(".newList").show();
 
@@ -194,93 +180,73 @@
 					url:  '/products',
 					type: 'POST',
 					data: {
-						itemName: productData[0].value,
-						des: 		productData[1].value,
-						price:    productData[2].value,
+						itemName: $(".userInput")[0].value,
+						des: 	  $(".userInput")[1].value,
+						price:    $(".userInput")[2].value,
 					},
 
 					success:function(response){
 						displayData([response],false);
 					
 						$('.userInput').val(""); // clears the input box
+
 						
 					}
 					
 				});
-
-				 /*$.get('/products',function(data){
-					console.log(data);
-
-                   displayData(data, true);
-    			});*/
-				 $.get('/products',function(data){
-					console.log(data);
-
-                   displayData(data, true);
-    			});
+				
+				
 			
 			});
 			
-			$("#mySearch").on("keyup",function(){
+			$("#mySearch").on("change",function(){
 
 				//no need to get data from the server
 				// get data from the div ============
+				console.log("i am in mySearch");
 
-				var searchItem = $("#mySearch").val();
+				var searchItem = $(this).val();
 				console.log("searchItem: "+searchItem);
 
+				getSearchItem(searchItem);
 
-                var funcCodePointer = function (data) {
-
-                                    var searchData = data;
-
-                                    console.log("searchData: "+searchData);
-
-                                    var searchResult = $.grep(searchData, 
-                                    	function(obj,index){ 
-                                              console.log(obj.itemName);
-                                               return obj.itemName.toUpperCase().
-                                               includes(searchItem.toUpperCase());;
-                                         });
-
-                                    var searchResult = $.grep(searchData, function(obj,index){
-                                    	console.log(searchResult); 
-
-                                    displayData(searchResult, true);
-
-                 };
-
-                getSearchItem(searchItem, funcCodePointer);
-
-			
-			}); 
+                
 			
 				// $(".newList").hide();
 				// $(".productsDiv").html(getSearchItem());
 
 			}); 
 
-			function getSearchItem(searchItemm, funcCodePointer){
-				
-				$.get('/products', funcCodePointer);
+			function getSearchItem(searchItem){
+			
+				for(var i = $(".productsDiv").length-1 ; i >= 0 ; i --){
+					if(searchItem != $(".productsDiv")[i].innerHTML){
+						
+						console.log($($(".productsDiv")[i]).closest('.outerTag').hide());
+						
+					}
+				}
+
+				//$.get('/products', funcCodePointer);
 
                // return searchResult;
 			};
 
             function displayData(data, clean) {
-            	console.log(data);
+            	//console.log(data);
 				var template = Handlebars.compile($('#template2').html());
 
 				if (clean == true) { $(".newList").html(''); }
 
 				$(".newList").append(template(data));
+				//$(".newList").show();
             }
 
-		})
+		});
 
 	</script>
 	<script src="https://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js"></script>
-	<script  src="../js/bootstrap.js"></script>
+	<!--<script  src="../js/bootstrap.js"></script>-->
 </body>
 </html>
 

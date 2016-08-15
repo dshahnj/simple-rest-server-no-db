@@ -20,3 +20,12 @@ app.config(function($routeProvider){
 		.otherwise({redirectTo:'/'});
 })
 
+/*
+
+	<a href="#/home">Home</a>
+	<a href="#/courses">Courses</a>
+	<a href="#/students">Students</a>
+				
+
+
+*/
